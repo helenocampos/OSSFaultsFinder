@@ -1,7 +1,0 @@
-info/heleno/faultsFinder/dao/HibernateUtil.class
-info/heleno/faultsFinder/domain/FailedBuild.class
-info/heleno/faultsFinder/domain/Project.class
-info/heleno/faultsFinder/domain/FailedBuild$1.class
-info/heleno/faultsFinder/dao/FailedBuildDAO.class
-info/heleno/faultsFinder/dao/ProjectDAO.class
-info/heleno/faultsFinder/Extractor.class
