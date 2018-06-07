@@ -70,7 +70,8 @@ public class FailedBuild implements Serializable {
     private String pullRequestURL;
     @Column(name = "sha")
     private String sha;
-
+    @Column(name="faillingModule")
+    private String faillingModule;
     /**
      * Get the value of sha
      *
@@ -96,13 +97,14 @@ public class FailedBuild implements Serializable {
     public FailedBuild() {
     }
 
-    public FailedBuild(Integer buildNumber, Integer failedAmount, Integer erroredAmount, String pullRequestURL, Project projectidProject, String sha) {
+    public FailedBuild(Integer buildNumber, Integer failedAmount, Integer erroredAmount, String pullRequestURL, Project projectidProject, String sha, String faillingModule) {
         this.buildNumber = buildNumber;
         this.failedAmount = failedAmount;
         this.erroredAmount = erroredAmount;
         this.pullRequestURL = pullRequestURL;
         this.projectidProject = projectidProject;
         this.sha = sha;
+        this.faillingModule = faillingModule;
     }
 
     public FailedBuild(Integer idFailedBuild) {
@@ -334,6 +336,16 @@ System.setProperty("sun.net.client.defaultReadTimeout", "10000");
         } catch (IOException ex) {
             Logger.getLogger(FailedBuild.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public String getFaillingModule()
+    {
+        return faillingModule;
+    }
+
+    public void setFaillingModule(String faillingModule)
+    {
+        this.faillingModule = faillingModule;
     }
 
 }

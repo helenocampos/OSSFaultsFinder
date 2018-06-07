@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS `faultsFinder`.`failedBuild` (
   `failedAmount` INT NULL,
   `erroredAmount` INT NULL,
   `pullRequestURL` VARCHAR(200) NULL,
+  `faillingModule` VARCHAR(50) NULL,
   `sha` VARCHAR(40) NULL,
   `project_idProject` INT NOT NULL,
   PRIMARY KEY (`idFailedBuild`),
