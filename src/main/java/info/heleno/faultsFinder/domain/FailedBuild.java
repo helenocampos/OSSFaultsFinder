@@ -72,6 +72,10 @@ public class FailedBuild implements Serializable {
     private String sha;
     @Column(name="faillingModule")
     private String faillingModule;
+    @Column(name="jobNumber")
+    private Integer jobNumber;
+    @Column(name="jobId")
+    private Integer jobId;
     /**
      * Get the value of sha
      *
@@ -97,7 +101,7 @@ public class FailedBuild implements Serializable {
     public FailedBuild() {
     }
 
-    public FailedBuild(Integer buildNumber, Integer failedAmount, Integer erroredAmount, String pullRequestURL, Project projectidProject, String sha, String faillingModule) {
+    public FailedBuild(Integer buildNumber, Integer failedAmount, Integer erroredAmount, String pullRequestURL, Project projectidProject, String sha, String faillingModule, Integer jobNumber, Integer jobId) {
         this.buildNumber = buildNumber;
         this.failedAmount = failedAmount;
         this.erroredAmount = erroredAmount;
@@ -105,6 +109,8 @@ public class FailedBuild implements Serializable {
         this.projectidProject = projectidProject;
         this.sha = sha;
         this.faillingModule = faillingModule;
+        this.jobNumber = jobNumber;
+        this.jobId = jobId;
     }
 
     public FailedBuild(Integer idFailedBuild) {
@@ -346,6 +352,26 @@ System.setProperty("sun.net.client.defaultReadTimeout", "10000");
     public void setFaillingModule(String faillingModule)
     {
         this.faillingModule = faillingModule;
+    }
+
+    public Integer getJobNumber()
+    {
+        return jobNumber;
+    }
+
+    public void setJobNumber(Integer jobNumber)
+    {
+        this.jobNumber = jobNumber;
+    }
+
+    public Integer getJobId()
+    {
+        return jobId;
+    }
+
+    public void setJobId(Integer jobId)
+    {
+        this.jobId = jobId;
     }
 
 }

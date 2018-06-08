@@ -170,20 +170,31 @@ public class Project implements Serializable
                     {
                         for (Job job : build.getJobs())
                         {
-                            Optional<Log> logOptional = jTravis.log().from(job);
-                            if (logOptional.isPresent())
+                            Optional<Job> optJob = jTravis.job().fromId(job.getId());
+                            if (optJob.isPresent())
                             {
-                                Commit commit = build.getCommit();
-                                Log log = logOptional.get();
-                                TestsInformation testsInformation = log.getTestsInformation();
-
-                                if (testsInformation != null)
+                                job = optJob.get();
+                                if (job.getState() == StateType.FAILED)
                                 {
-                                    FailedBuildDAO.insertFailedBuild(new FailedBuild(Integer.parseInt(build.getNumber()), testsInformation.getFailing(), testsInformation.getErrored(),
-                                            commit.getCompareUrl(), this, commit.getSha(), identifyFailingModule(log)));
-                                    System.out.println("Inserting failed build #" + build.getNumber());
+                                    Optional<Log> logOptional = jTravis.log().from(job);
+                                    if (logOptional.isPresent())
+                                    {
+                                        Commit commit = build.getCommit();
+                                        Log log = logOptional.get();
+                                        TestsInformation testsInformation = log.getTestsInformation();
+
+                                        if (testsInformation != null)
+                                        {
+                                            if (testsInformation.getFailing() != 0 || testsInformation.getErrored() != 0)
+                                            {
+                                                FailedBuildDAO.insertFailedBuild(new FailedBuild(Integer.parseInt(build.getNumber()), testsInformation.getFailing(), testsInformation.getErrored(), commit.getCompareUrl(), this, commit.getSha(), identifyFailingModule(log), job.getJobNumber(),job.getId()));
+                                                System.out.println("Inserting failed build #" + build.getNumber());
+                                            }
+                                        }
+                                    }
                                 }
                             }
+
                         }
                     }
                 }

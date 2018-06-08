@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS `faultsFinder`.`failedBuild` (
   `idFailedBuild` INT NOT NULL AUTO_INCREMENT,
   `buildNumber` INT NULL,
   `failedAmount` INT NULL,
+    `jobNumber` INT NULL,
+        `jobId` INT NULL,
   `erroredAmount` INT NULL,
   `pullRequestURL` VARCHAR(200) NULL,
   `faillingModule` VARCHAR(50) NULL,
