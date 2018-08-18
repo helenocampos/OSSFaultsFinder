@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `faultsFinder`.`failedBuild` (
   `buildNumber` INT NULL,
   `failedAmount` INT NULL,
     `jobNumber` INT NULL,
-        `jobId` INT NULL,
+        `jobId` BIGINT NULL,
   `erroredAmount` INT NULL,
   `pullRequestURL` VARCHAR(200) NULL,
   `faillingModule` VARCHAR(50) NULL,

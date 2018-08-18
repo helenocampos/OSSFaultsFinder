@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
@@ -75,7 +76,7 @@ public class FailedBuild implements Serializable {
     @Column(name="jobNumber")
     private Integer jobNumber;
     @Column(name="jobId")
-    private Integer jobId;
+    private BigInteger jobId;
     /**
      * Get the value of sha
      *
@@ -101,7 +102,7 @@ public class FailedBuild implements Serializable {
     public FailedBuild() {
     }
 
-    public FailedBuild(Integer buildNumber, Integer failedAmount, Integer erroredAmount, String pullRequestURL, Project projectidProject, String sha, String faillingModule, Integer jobNumber, Integer jobId) {
+    public FailedBuild(Integer buildNumber, Integer failedAmount, Integer erroredAmount, String pullRequestURL, Project projectidProject, String sha, String faillingModule, Integer jobNumber, BigInteger jobId) {
         this.buildNumber = buildNumber;
         this.failedAmount = failedAmount;
         this.erroredAmount = erroredAmount;
@@ -205,7 +206,7 @@ public class FailedBuild implements Serializable {
             System.out.println("Requesting download for build number" + this.getBuildNumber());
 //            ReadableByteChannel rbc = Channels.newChannel(url.openStream());
             File currentFolder = new File(System.getProperty("user.dir"));
-            Path zippedFolderPath = Paths.get(currentFolder.getAbsolutePath(), this.buildNumber + ".zip");
+            Path zippedFolderPath = Paths.get(currentFolder.getAbsolutePath(), "-"+this.buildNumber + ".zip");
             boolean downloaded = download(urlBuilder.toString(), zippedFolderPath.toString(), 5);
 //            FileOutputStream fos = new FileOutputStream(zippedFolderPath.toString());
 //            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
@@ -364,12 +365,12 @@ System.setProperty("sun.net.client.defaultReadTimeout", "10000");
         this.jobNumber = jobNumber;
     }
 
-    public Integer getJobId()
+    public BigInteger getJobId()
     {
         return jobId;
     }
 
-    public void setJobId(Integer jobId)
+    public void setJobId(BigInteger jobId)
     {
         this.jobId = jobId;
     }

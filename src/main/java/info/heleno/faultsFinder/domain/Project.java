@@ -17,6 +17,7 @@ import fr.inria.jtravis.entities.StateType;
 import fr.inria.jtravis.entities.TestsInformation;
 import info.heleno.faultsFinder.dao.FailedBuildDAO;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -156,7 +157,7 @@ public class Project implements Serializable
 
     public void proccessFailedBuilds()
     {
-        JTravis jTravis = new JTravis.Builder().build();
+        JTravis jTravis = JTravis.builder().build();
         Optional<Repository> repository = jTravis.repository().fromSlug(getProjectSlug());
 
         if (repository.isPresent())
@@ -170,7 +171,7 @@ public class Project implements Serializable
                     {
                         for (Job job : build.getJobs())
                         {
-                            Optional<Job> optJob = jTravis.job().fromId(job.getId());
+                            Optional<Job> optJob = jTravis.job().fromId(Long.toString(job.getId()));
                             if (optJob.isPresent())
                             {
                                 job = optJob.get();
@@ -187,7 +188,7 @@ public class Project implements Serializable
                                         {
                                             if (testsInformation.getFailing() != 0 || testsInformation.getErrored() != 0)
                                             {
-                                                FailedBuildDAO.insertFailedBuild(new FailedBuild(Integer.parseInt(build.getNumber()), testsInformation.getFailing(), testsInformation.getErrored(), commit.getCompareUrl(), this, commit.getSha(), identifyFailingModule(log), job.getJobNumber(),job.getId()));
+                                                FailedBuildDAO.insertFailedBuild(new FailedBuild(Integer.parseInt(build.getNumber()), testsInformation.getFailing(), testsInformation.getErrored(), commit.getCompareUrl(), this, commit.getSha(), identifyFailingModule(log), job.getJobNumber(),BigInteger.valueOf(job.getId())));
                                                 System.out.println("Inserting failed build #" + build.getNumber());
                                             }
                                         }
